@@ -1,4 +1,4 @@
-const {assert} = require('chai');
+const { assert } = require('chai');
 
 describe('User visits root', () => {
   describe('without existing items', () => {
@@ -14,7 +14,7 @@ describe('User visits root', () => {
 
       browser.click('a[href="create.html"]');
 
-      assert.equal(browser.getText('h1'), 'Create');
+      assert.equal(browser.getText('h2'), 'Create');
     });
   });
 });
