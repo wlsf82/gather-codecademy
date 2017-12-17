@@ -26,8 +26,18 @@ const parseTextFromHTML = (htmlAsString, selector) => {
   }
 };
 
+const findImageElementBySource = (htmlAsString, src) => {
+  const image = jsdom(htmlAsString).querySelector(`img[src="${src}"]`);
+  if (image !== null) {
+    return image;
+  } else {
+    throw new Error(`Image with src "${src}" not found in HTML string`);
+  }
+};
+
 module.exports = {
   buildItemObject,
   seedItemToDatabase,
   parseTextFromHTML,
+  findImageElementBySource,
 };
