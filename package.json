@@ -6,8 +6,9 @@
     "drop-db": "node ./bin/drop-database",
     "seed-db": "node ./bin/seed-database",
     "start": "node ./bin/www",
-    "test": "npm run test:mocha && bin/wdio-test",
-    "test:mocha": "bin/mocha-test"
+    "test": "npm run test:mocha && npm run test:feature",
+    "test:mocha": "bin/mocha-test",
+    "test:feature": "bin/wdio-test"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
