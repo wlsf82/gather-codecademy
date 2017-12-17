@@ -1,21 +1,20 @@
 const { assert } = require('chai');
 const { buildItemObject } = require('../test-utils');
 
-describe('User visits create', () => {
-    describe('post a new item', () => {
-        it('render the new post item after posting', () => {
-            const newItem = buildItemObject();
+describe('User visits the create page', () => {
+    describe('posts a new item', () => {
+        it('is rendered', () => {
+            const itemToCreate = buildItemObject();
 
-            browser.url('create.html');
+            browser.url('/items/create');
 
-            browser.setValue('#title-input', newItem.title);
-            browser.setValue('#description-input', newItem.description);
-            browser.setValue('#imageUrl-input', newItem.imageUrl);
+            browser.setValue('#title-input', itemToCreate.title);
+            browser.setValue('#description-input', itemToCreate.description);
+            browser.setValue('#imageUrl-input', itemToCreate.imageUrl);
             browser.click('#submit-button');
 
-            assert.include(browser.getText('#items-container'), newItem.title);
-            assert.include(browser.getText('#items-container'), newItem.description);
-            assert.equal(browser.getAttribute('#items-container img', 'src'), newItem.imageUrl);
+            assert.include(browser.getText('#items-container'), itemToCreate.title);
+            assert.include(browser.getAttribute('#items-container img', 'src'), itemToCreate.imageUrl);
         });
     });
 });
