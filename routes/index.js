@@ -7,7 +7,15 @@ router.get('/', async (req, res, next) => {
   res.render('index', {items});
 });
 
-// Add additional routes below:
+router.get('/items/create', async (req, res, next) => {
+  res.render('create');
+});
+
+router.post('/items/create', async (req, res, next) => {
+  const items = [req.body];
+
+  res.render('index', {items});
+});
 
 
 
