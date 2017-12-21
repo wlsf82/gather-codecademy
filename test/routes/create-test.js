@@ -26,7 +26,7 @@ describe('Server path: /items/create', () => {
     });
 
     describe('POST', () => {
-        it('creates a new item and renders it', async () => {
+        it('creates a new item', async () => {
             const itemToCreate = await buildItemObject();
 
             const response = await request(app)
@@ -34,10 +34,75 @@ describe('Server path: /items/create', () => {
                 .type('form')
                 .send(itemToCreate);
 
-            const imageElement = findImageElementBySource(response.text, itemToCreate.imageUrl);
+            const createdItem = await Item.findOne(itemToCreate);
 
-            assert.include(parseTextFromHTML(response.text, '.item-title'), itemToCreate.title);
-            assert.equal(imageElement.src, itemToCreate.imageUrl);
+            assert.isOk(createdItem, 'Item was not created successfully in the database');
+        });
+
+        it('redirects to home after creating an item', async () => {
+            const itemToCreate = await buildItemObject();
+
+            const response = await request(app)
+                .post('/items/create')
+                .type('form')
+                .send(itemToCreate);
+
+            assert.equal(response.status, 302);
+            assert.equal(response.headers.location, '/');
+        });
+
+        it('should show an error message when trying to create an item without a title', async () => {
+            const invalidItemToCreate = {
+                description: 'foobarbaz',
+                imageUrl: 'https://foo.bar.baz'
+            };
+
+            const response = await request(app)
+                .post('/items/create')
+                .type('form')
+                .send(invalidItemToCreate);
+
+            const items = await Item.find({});
+
+            assert.equal(items.length, 0);
+            assert.equal(response.status, 400);
+            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+        });
+
+        it('should show an error message when trying to create an item without a description', async () => {
+            const invalidItemToCreate = {
+                title: 'bar',
+                imageUrl: 'https://bar.foo'
+            };
+
+            const response = await request(app)
+                .post('/items/create')
+                .type('form')
+                .send(invalidItemToCreate);
+
+            const items = await Item.find({});
+
+            assert.equal(items.length, 0);
+            assert.equal(response.status, 400);
+            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+        });
+
+        it('should show an error message when trying to create an item without an image url', async () => {
+            const invalidItemToCreate = {
+                title: 'baz',
+                description: 'bah baz'
+            };
+
+            const response = await request(app)
+                .post('/items/create')
+                .type('form')
+                .send(invalidItemToCreate);
+
+            const items = await Item.find({});
+
+            assert.equal(items.length, 0);
+            assert.equal(response.status, 400);
+            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
         });
     });
 });
