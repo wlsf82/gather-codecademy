@@ -11,6 +11,18 @@ describe('Server path: /items/:id', () => {
 
     afterEach(diconnectDatabase);
 
-    // Write your test blocks below:
+    describe('GET', () => {
+        it('renders title and description', async () => {
+            const item = await seedItemToDatabase({
+                title: 'foo',
+                description: 'foo bar baz',
+                imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Foo_was_here.jpg'
+            });
 
+            const response = await request(app).get(`/items/${item._id}`);
+
+            assert.equal(parseTextFromHTML(response.text, '#item-title'), item.title);
+            assert.equal(parseTextFromHTML(response.text, '#item-description'), item.description);
+        });
+    });
 });
