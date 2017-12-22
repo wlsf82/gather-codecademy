@@ -1,12 +1,12 @@
-const {jsdom} = require('jsdom');
+const {jsdom} = require("jsdom");
 
-const Item = require('../models/item');
+const Item = require("../models/item");
 
 // Create and return a sample Item object
 const buildItemObject = (options = {}) => {
-  const title = options.title || 'My favorite item';
-  const imageUrl = options.imageUrl || 'http://placebear.com/g/200/300';
-  const description = options.description || 'Just the best item';
+  const title = options.title || "My favorite item";
+  const imageUrl = options.imageUrl || "http://placebear.com/g/200/300";
+  const description = options.description || "Just the best item";
   return {title, imageUrl, description};
 };
 
@@ -31,7 +31,7 @@ const findImageElementBySource = (htmlAsString, src) => {
   if (image !== null) {
     return image;
   } else {
-    throw new Error(`Image with src "${src}" not found in HTML string`);
+    throw new Error(`Image with src '${src}' not found in HTML string`);
   }
 };
 

@@ -1,4 +1,4 @@
-const {mongoose, databaseUrl, options} = require('../database');
+const {mongoose, databaseUrl, options} = require("../database");
 
 const connectDatabaseAndDropData = async () => {
   await mongoose.connect(databaseUrl, options);

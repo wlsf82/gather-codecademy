@@ -1,108 +1,108 @@
-const { assert } = require('chai');
-const request = require('supertest');
-const { jsdom } = require('jsdom');
+const { assert } = require("chai");
+const request = require("supertest");
+const { jsdom } = require("jsdom");
 
-const app = require('../../app');
-const Item = require('../../models/item');
+const app = require("../../app");
+const Item = require("../../models/item");
 
-const { parseTextFromHTML, buildItemObject, findImageElementBySource } = require('../test-utils');
-const { connectDatabaseAndDropData, diconnectDatabase } = require('../setup-teardown-utils');
+const { parseTextFromHTML, buildItemObject, findImageElementBySource } = require("../test-utils");
+const { connectDatabaseAndDropData, diconnectDatabase } = require("../setup-teardown-utils");
 
-describe('Server path: /items/create', () => {
+describe("Server path: /items/create", () => {
     const itemToCreate = buildItemObject();
 
     beforeEach(connectDatabaseAndDropData);
 
     afterEach(diconnectDatabase);
 
-    describe('GET', () => {
-        it('renders empty input fields', async () => {
-            const response = await request(app).get('/items/create');
+    describe("GET", () => {
+        it("renders empty input fields", async () => {
+            const response = await request(app).get("/items/create");
 
-            assert.equal(parseTextFromHTML(response.text, 'input#title-input'), '');
-            assert.equal(parseTextFromHTML(response.text, 'textarea#description-input'), '');
-            assert.equal(parseTextFromHTML(response.text, 'input#imageUrl-input'), '');
+            assert.equal(parseTextFromHTML(response.text, "input#title-input"), "");
+            assert.equal(parseTextFromHTML(response.text, "textarea#description-input"), "");
+            assert.equal(parseTextFromHTML(response.text, "input#imageUrl-input"), "");
         });
     });
 
-    describe('POST', () => {
-        it('creates a new item', async () => {
+    describe("POST", () => {
+        it("creates a new item", async () => {
             const itemToCreate = await buildItemObject();
 
             const response = await request(app)
-                .post('/items/create')
-                .type('form')
+                .post("/items/create")
+                .type("form")
                 .send(itemToCreate);
 
             const createdItem = await Item.findOne(itemToCreate);
 
-            assert.isOk(createdItem, 'Item was not created successfully in the database');
+            assert.isOk(createdItem, "Item was not created successfully in the database");
         });
 
-        it('redirects to home after creating an item', async () => {
+        it("redirects to home after creating an item", async () => {
             const itemToCreate = await buildItemObject();
 
             const response = await request(app)
-                .post('/items/create')
-                .type('form')
+                .post("/items/create")
+                .type("form")
                 .send(itemToCreate);
 
             assert.equal(response.status, 302);
-            assert.equal(response.headers.location, '/');
+            assert.equal(response.headers.location, "/");
         });
 
-        it('should show an error message when trying to create an item without a title', async () => {
+        it("should show an error message when trying to create an item without a title", async () => {
             const invalidItemToCreate = {
-                description: 'foobarbaz',
-                imageUrl: 'https://foo.bar.baz'
+                description: "foobarbaz",
+                imageUrl: "https://foo.bar.baz"
             };
 
             const response = await request(app)
-                .post('/items/create')
-                .type('form')
+                .post("/items/create")
+                .type("form")
                 .send(invalidItemToCreate);
 
             const items = await Item.find({});
 
             assert.equal(items.length, 0);
             assert.equal(response.status, 400);
-            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+            assert.include(parseTextFromHTML(response.text, "form"), "required");
         });
 
-        it('should show an error message when trying to create an item without a description', async () => {
+        it("should show an error message when trying to create an item without a description", async () => {
             const invalidItemToCreate = {
-                title: 'bar',
-                imageUrl: 'https://bar.foo'
+                title: "bar",
+                imageUrl: "https://bar.foo"
             };
 
             const response = await request(app)
-                .post('/items/create')
-                .type('form')
+                .post("/items/create")
+                .type("form")
                 .send(invalidItemToCreate);
 
             const items = await Item.find({});
 
             assert.equal(items.length, 0);
             assert.equal(response.status, 400);
-            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+            assert.include(parseTextFromHTML(response.text, "form"), "required");
         });
 
-        it('should show an error message when trying to create an item without an image url', async () => {
+        it("should show an error message when trying to create an item without an image url", async () => {
             const invalidItemToCreate = {
-                title: 'baz',
-                description: 'bah baz'
+                title: "baz",
+                description: "bah baz"
             };
 
             const response = await request(app)
-                .post('/items/create')
-                .type('form')
+                .post("/items/create")
+                .type("form")
                 .send(invalidItemToCreate);
 
             const items = await Item.find({});
 
             assert.equal(items.length, 0);
             assert.equal(response.status, 400);
-            assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+            assert.include(parseTextFromHTML(response.text, "form"), "required");
         });
     });
 });

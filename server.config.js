@@ -1,8 +1,8 @@
 module.exports = {
-  development: {
-    port: 4001,
-  },
-  test: {
-    port: 8001,
-  },
+    development: {
+        port: 4001,
+    },
+    test: {
+        port: 8001,
+    },
 };

@@ -1,8 +1,8 @@
-const Item = require('../../models/item');
-const {assert} = require('chai');
-const {mongoose, databaseUrl, options} = require('../../database');
+const Item = require("../../models/item");
+const {assert} = require("chai");
+const {mongoose, databaseUrl, options} = require("../../database");
 
-describe('Model: Item', () => {
+describe("Model: Item", () => {
     beforeEach(async () => {
         await mongoose.connect(databaseUrl, options);
         await mongoose.connection.db.dropDatabase();
@@ -12,8 +12,8 @@ describe('Model: Item', () => {
         await mongoose.disconnect();
     });
 
-    describe('title', () => {
-        it('is a String', () => {
+    describe("title", () => {
+        it("is a String", () => {
             const titleAsNonString = 1;
 
             const item = new Item({
@@ -23,19 +23,19 @@ describe('Model: Item', () => {
             assert.strictEqual(item.title, titleAsNonString.toString());
         });
 
-        it('is required', () => {
-            const item = new Item({title: ''})
+        it("is required", () => {
+            const item = new Item({title: ""})
 
             item.validateSync();
 
             const message = item.errors.title.message
 
-            assert.equal(message, 'Path `title` is required.');
+            assert.equal(message, "Path `title` is required.");
         });
     });
 
-    describe('description', () => {
-        it('is a String', () => {
+    describe("description", () => {
+        it("is a String", () => {
             const descriptionAsNonString = 1;
 
             const item = new Item({
@@ -45,19 +45,19 @@ describe('Model: Item', () => {
             assert.strictEqual(item.description, descriptionAsNonString.toString());
         });
 
-        it('is required', () => {
-            const item = new Item({description: ''})
+        it("is required", () => {
+            const item = new Item({description: ""})
 
             item.validateSync();
 
             const message = item.errors.description.message
 
-            assert.equal(message, 'Path `description` is required.');
+            assert.equal(message, "Path `description` is required.");
         });
     });
 
-    describe('imageUrl', () => {
-        it('is a String', () => {
+    describe("imageUrl", () => {
+        it("is a String", () => {
             const imageUrlAsNonString = 1;
 
             const item = new Item({
@@ -67,14 +67,14 @@ describe('Model: Item', () => {
             assert.strictEqual(item.imageUrl, imageUrlAsNonString.toString());
         });
 
-        it('is required', () => {
-            const item = new Item({imageUrl: ''})
+        it("is required", () => {
+            const item = new Item({imageUrl: ""})
 
             item.validateSync();
 
             const message = item.errors.imageUrl.message
 
-            assert.equal(message, 'Path `imageUrl` is required.');
+            assert.equal(message, "Path `imageUrl` is required.");
         });
     });
 });

@@ -1,17 +1,17 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const Item = require('../models/item');
+const Item = require("../models/item");
 
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     const items = await Item.find({});
-    res.render('index', {items});
+    res.render("index", {items});
 });
 
-router.get('/items/create', async (req, res, next) => {
-    res.render('create');
+router.get("/items/create", async (req, res, next) => {
+    res.render("create");
 });
 
-router.post('/items/create', async (req, res, next) => {
+router.post("/items/create", async (req, res, next) => {
     const { title, description, imageUrl } = req.body;
 
     const newItem = new Item({
@@ -23,18 +23,18 @@ router.post('/items/create', async (req, res, next) => {
     newItem.validateSync();
 
     if (newItem.errors) {
-        res.status(400).render('create', {newItem: newItem});
+        res.status(400).render("create", {newItem: newItem});
     } else {
         await newItem.save();
-        res.redirect('/');
+        res.redirect("/");
     }
 });
 
-router.get('/items/:id', async (req, res, next) => {
+router.get("/items/:id", async (req, res, next) => {
     const itemId = req.params.id;
     const item = await Item.findById({_id: itemId});
 
-    res.render('item', {item});
+    res.render("item", {item});
 });
 
 module.exports = router;
