@@ -13,10 +13,11 @@ describe('User visits a single item', () => {
         browser.click('#submit-button');
     });
 
-    it('renders item title and description', () => {
+    it('renders item title, description and image', () => {
         browser.click('.item-card a');
 
         assert.equal(browser.getText('#item-title'), itemToCreate.title);
         assert.equal(browser.getText('#item-description'), itemToCreate.description);
+        assert.include(browser.getAttribute('.single-item-container img', 'src'), itemToCreate.imageUrl);
     });
 });
