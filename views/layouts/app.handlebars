@@ -16,4 +16,20 @@
         </div>
         {{{ body }}}
     </body>
+    <script>
+        var img = document.getElementById("created-image");
+        function handleChange(e) {
+            var path = e.target.value.match(/^(https*:\/\/)/i) ? "" : "http://";
+            img.src = path + e.target.value;
+        }
+        document.getElementById("imageUrl-input").oninput = handleChange;
+
+        document.querySelectorAll(".delete-form")
+            .forEach(function(element) {
+                element.onclick = function(e) {
+                    e.preventDefault();
+                    element.submit()
+                };
+            });
+    </script>
 </html>
