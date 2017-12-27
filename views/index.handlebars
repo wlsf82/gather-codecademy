@@ -34,3 +34,12 @@
         </div>
     </a>
 </div>
+<script>
+    document.querySelectorAll(".delete-form")
+        .forEach((element) => {
+            element.onclick = (e) => {
+                e.preventDefault();
+                element.submit()
+            };
+        });
+</script>

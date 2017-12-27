@@ -38,3 +38,11 @@
         </div>
     </div>
 </div>
+<script>
+    const img = document.getElementById("created-image");
+    function handleChange(e) {
+        const path = e.target.value.match(/^(https*:\/\/)/i) ? "" : "http://";
+        img.src = path + e.target.value;
+    }
+    document.getElementById("imageUrl-input").oninput = handleChange;
+</script>
