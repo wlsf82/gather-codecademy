@@ -37,4 +37,15 @@ router.get("/items/:id", async (req, res, next) => {
     res.render("item", {item});
 });
 
+router.get("/items/:id/delete", async (req, res, next) => {
+    res.render("delete");
+});
+
+router.post("/items/:id/delete", async (req, res, next) => {
+    Item.remove({ _id: req.params.id }, (error) => {
+        if (error) return res.send(error);
+        res.redirect("/");
+    });
+});
+
 module.exports = router;
