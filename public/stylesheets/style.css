@@ -297,6 +297,27 @@ a {
     margin-bottom: 18px;
 }
 
+.delete-item-confirmation p,
+.delete-item-confirmation a {
+    color: #090924;
+    font-size: 16px;
+}
+
+.delete-item-confirmation p {
+    padding: 20px;
+}
+
+.delete-item-confirmation button {
+    font-size: 16px;
+    font-weight: 600;
+    width: 60px;
+    height: 38px;
+    background-color: #4270EF;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
 .single-item-navigation {
     width: 100%;
     margin: 10px 0px;
