@@ -1,11 +1,10 @@
 const { assert } = require("chai");
 const request = require("supertest");
-const { jsdom } = require("jsdom");
 
 const app = require("../../app");
 const Item = require("../../models/item");
 
-const { parseTextFromHTML, buildItemObject, findImageElementBySource } = require("../test-utils");
+const { parseTextFromHTML, buildItemObject } = require("../test-utils");
 const { connectDatabaseAndDropData, diconnectDatabase } = require("../setup-teardown-utils");
 
 describe("Server path: /items/create", () => {
