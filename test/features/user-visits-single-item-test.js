@@ -14,7 +14,7 @@ describe("User visits a single item", () => {
     });
 
     it("renders item title, description and image", () => {
-        browser.click(".item-card a");
+        browser.click(".item-view");
 
         assert.equal(browser.getText("#item-title"), itemToCreate.title);
         assert.equal(browser.getText("#item-description"), itemToCreate.description);
