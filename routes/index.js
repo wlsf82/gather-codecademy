@@ -23,7 +23,7 @@ router.post("/items/create", async (req, res, next) => {
     newItem.validateSync();
 
     if (newItem.errors) {
-        res.status(400).render("create", {newItem: newItem});
+        res.status(400).render("create", {newItem});
     } else {
         await newItem.save();
         res.redirect("/");
@@ -31,8 +31,7 @@ router.post("/items/create", async (req, res, next) => {
 });
 
 router.get("/items/:id", async (req, res, next) => {
-    const itemId = req.params.id;
-    const item = await Item.findById({_id: itemId});
+    const item = await Item.findById({_id: req.params.id});
 
     res.render("item", {item});
 });
