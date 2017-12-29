@@ -47,4 +47,10 @@ router.post("/items/:id/delete", async (req, res, next) => {
     });
 });
 
+router.get("/items/:id/update", async (req, res, next) => {
+    const item = await Item.findById({_id: req.params.id});
+
+    res.render("update", {item});
+});
+
 module.exports = router;
