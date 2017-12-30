@@ -1,7 +1,6 @@
 const { assert } = require("chai");
 const { buildItemObject } = require("../test-utils");
 
-// @TODO: fix tests
 describe("User visits the deletes item confirmation page", () => {
     const itemToCreate = buildItemObject();
 
@@ -12,13 +11,13 @@ describe("User visits the deletes item confirmation page", () => {
         browser.setValue("#description-input", itemToCreate.description);
         browser.setValue("#imageUrl-input", itemToCreate.imageUrl);
         browser.click("#submit-button");
+        // @TODO: find a better way to do this.
+        browser.submitForm(`//p[contains(text(), "${itemToCreate.title}")]/parent::*/parent::*//form[contains(@class, "delete-form")]`);
     });
-
-    beforeEach(() => browser.click(".delete-button img"));
 
     it("renders a confirmation paragraph, a 'yes' button and a 'no' link", () => {
         assert.equal(browser.getText(".delete-item-confirmation p"), "Are you sure you want to delete this item?");
-        assert.equal(browser.getText(".delete-item-confirmation button"), "Yes");
+        assert.equal(browser.getText(".delete-item-confirmation button"), "YES");
         assert.equal(browser.getText(".delete-item-confirmation a", "src"), "No");
     });
 
