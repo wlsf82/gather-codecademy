@@ -25,7 +25,7 @@ describe("User visits the deletes item confirmation page", () => {
         it("goes back to home page when clicking the 'no' link", () => {
             browser.click(".delete-item-confirmation a");
 
-            assert.include(browser.getText("#items-container"), itemToCreate.title);
+            assert.equal(browser.getText("#items-container"), itemToCreate.title);
         });
 
         it("goes back to home page when clicking the 'yes' button and the deleted item is not shown anymore", () => {
