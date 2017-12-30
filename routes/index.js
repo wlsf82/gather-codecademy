@@ -53,4 +53,25 @@ router.get("/items/:id/update", async (req, res, next) => {
     res.render("update", {item});
 });
 
+router.post("/items/:id/update", async (req, res, next) => {
+    const { title, description, imageUrl } = req.body;
+
+    const updatedItem = new Item({
+        title,
+        description,
+        imageUrl
+    });
+
+    updatedItem.validateSync();
+
+    if (updatedItem.errors) {
+        res.status(400).render("update", {updatedItem});
+    } else {
+        await Item.findOneAndUpdate({_id: req.params.id}, req.body, (error) => {
+            if (error) return res.send(error);
+            res.redirect("/");
+        });
+    }
+});
+
 module.exports = router;
