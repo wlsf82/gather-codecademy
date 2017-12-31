@@ -9,7 +9,7 @@
             <h2>Create</h2>
             <form class="input-form" action="/items/create" method="post" >
                 <label class="form-label" for="title">Title</label>
-                <input id="title-input" name="title" maxlength="50"/>
+                <input id="title-input" name="title" maxlength="50" value="{{ newItem.title }}"/>
                 {{#with newItem.errors.title as | error |}}
                     <span class="error">{{ error.message }}</span>
                 {{/with}}
@@ -21,7 +21,7 @@
                 {{/with}}
 
                 <label class="form-label" for="imageUrl">Image Url</label>
-                <input id="imageUrl-input" name="imageUrl" oninput="handleChange" value="{{newItem.imageUrl}}"/>
+                <input id="imageUrl-input" name="imageUrl" oninput="handleChange" value="{{ newItem.imageUrl }}"/>
                 {{#with newItem.errors.imageUrl as | error |}}
                     <span class="error">{{ error.message }}</span>
                 {{/with}}
