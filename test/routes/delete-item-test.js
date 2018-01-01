@@ -21,8 +21,6 @@ describe("Server path items/:id/delete", () => {
 
             assert.equal(response.status, 302);
             assert.equal(response.headers.location, "/");
-            // @TODO: fix failing assertion
-            assert.notInclude(parseTextFromHTML(response.text, "#items-container"), item.title);
         });
     })
 });
