@@ -18,9 +18,9 @@ describe("Server path: /items/create", () => {
         it("renders empty input fields", async () => {
             const response = await request(app).get("/items/create");
 
-            assert.equal(parseTextFromHTML(response.text, "input#title-input"), "");
-            assert.equal(parseTextFromHTML(response.text, "textarea#description-input"), "");
-            assert.equal(parseTextFromHTML(response.text, "input#imageUrl-input"), "");
+            assert.equal(parseTextFromHTML(response.text, "#title-input"), "");
+            assert.equal(parseTextFromHTML(response.text, "#description-input"), "");
+            assert.equal(parseTextFromHTML(response.text, "#imageUrl-input"), "");
         });
     });
 
